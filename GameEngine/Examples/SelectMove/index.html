@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>GameEngine Example</title>
+	<style type="text/css" media="screen">
+		body { overflow:hidden; font:10px/1.4 Helvetica,Arial,sans-serif; }
+		h1 { position:relative; z-index:1; text-align:center; }
+		.disc { -webkit-border-radius:10px; -moz-border-radius:10px; width:50px; height:50px; margin:-25px 0 0 -25px; background-color:red; }
+		.disc.selected { -webkit-box-shadow:0 0 5px rgba(255,0,0,.7); }
+	</style>
+	<script src="../mootools.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../Source/GameEngine.js" type="text/javascript" charset="utf-8"></script>
+	<script src="SelectMove.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		window.addEvent('domready',function(){
+			var instance = new GameEngine({ autostart:true });
+
+			(20).times(function(){
+				new SelectMove(instance,{
+					x: Number.random(50,600),
+					y: Number.random(50,600),
+					color:'rgba('+Number.random(0,255)+','+Number.random(0,255)+','+Number.random(0,255)+','+Number.random(20,100)/100+')'
+				});
+			})
+
+			var toggleEngine = function(e){
+				if (e.key !== 'space') return;
+				(instance.running === true) ? instance.stop() : instance.start();
+			};
+
+			window.addEvent('keydown',toggleEngine);
+		})
+	</script>
+</head>
+<body>
+<h1>Press Spacebar to Start/Stop GameEngine</h1>
+</body>
+</html>

@@ -1,0 +1,174 @@
+/* @override http://amadeus.local/assets/style.css */
+
+/* @group CSS Reset */
+/* html5doctor.com Reset Stylesheet, v1.4, 2009-07-27, Author: Richard Clark - http://richclarkdesign.com */
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,dialog,figure,footer,header,hgroup,menu,nav,section,time,mark,audio,video
+{ margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent; }
+body { line-height:1; }
+article,aside,dialog,figure,footer,header,hgroup,nav,section { display:block; }
+nav ul { list-style:none; }
+blockquote,q { quotes:none; }
+blockquote:before, blockquote:after,
+q:before,q:after { content:'';content:none; }
+a { margin:0;padding:0;border:0;font-size:100%;vertical-align:baseline;background:transparent; }
+ins { background-color:#ff9;color:#000;text-decoration:none; }
+mark { background-color:#ff9;color:#000;font-style:italic;font-weight:bold; }
+del { text-decoration: line-through; }
+abbr[title], dfn[title] { border-bottom:1px dotted #000;cursor:help; }
+table { border-collapse:collapse;border-spacing:0; }
+hr { display:block;height:1px;border:0;border-top:1px solid #cccccc;margin:1em 0;padding:0; }
+input, select { vertical-align:middle; }
+/* @end */
+/* @group General */
+
+
+html, body {
+	position:absolute;
+	display:block;
+	width:100%;
+	height:100%;
+	color:#0f4e82;
+	overflow:hidden;
+}
+
+body {
+	background-color:transparent;
+	font-family:'Surrounded';
+	width:4800px;
+/*	-webkit-box-shadow:inset 0 0 20px #000;
+	-moz-box-shadow:inset 0 0 600px rgba(0,0,0,.4);*/
+}
+
+.Template {
+	display:block;
+	position:relative;
+	float:left;
+	width:960px;
+	height:100%;
+}
+
+.Template.home {
+	background-color:#1b94f6;
+}
+
+.Template.designer {
+	background-color:rgb(245,19,130);
+}
+
+.Template.developer {
+	background-color:rgb(255,251,0);
+}
+
+.Template.motorcyclist {
+	background-color:rgb(74,248,220);
+}
+
+.Template.sanfrancisco {
+	
+}
+
+.Template.home h1 {
+	position:absolute;
+	width:100%;
+	text-align:center;
+	font-size:235px;
+	line-height:.7em;
+	margin-top:-180px;
+	font-weight:normal;
+	top:50%;
+	text-shadow:
+		8px -8px 0 rgb(245,19,130),
+		16px -16px 0 rgb(255,251,0),
+		24px -24px 0 rgb(74,248,220),
+		32px -32px 0 rgb(255,255,255);
+		/*0 0 200px rgba(255,255,255,1);*/
+		
+	/*	8px -8px 0 #f51382,
+		16px -16px 0 #fffb00,
+		24px -24px 0 #4af8dc,
+		32px -32px 0 #ffffff;
+	*/
+	-webkit-transition:-webkit-transform 500ms ease-out, opacity 500ms ease-out;
+
+		/*0 0 100px rgba(255,255,255,.5)*/
+		
+}
+
+p {
+	font-size:30px;
+	width:100%;
+	position:absolute;
+	top:50%;
+	margin-top:180px;
+	text-align:center;
+	color:#0f4e82;
+	text-shadow:
+		0 1px 0 rgba(255,255,255,.4),
+		0 0 20px rgba(0,0,0,.3);
+}
+
+p span {
+	cursor:pointer;
+}
+
+.a {
+	color:#f51382;
+	opacity:.9;
+	text-shadow:
+		0 1px 0 #000,
+		0 0 40px rgba(235,19,130,0);
+}
+
+.a:hover {
+	opacity:1;
+	text-shadow:
+		0 1px 0 #000,
+		0 0 40px rgba(235,19,130,1) !important;
+}
+
+.b {
+	color:#fffb00;
+	opacity:.9;
+	text-shadow:
+		0 1px 0 #000,
+		0 0 0 rgba(255,251,0,1);
+}
+
+.b:hover {
+	opacity:1;
+	text-shadow:
+		0 1px 0 #000,
+		0 0 40px rgba(255,251,0,1) !important;
+}
+
+.c {
+	color:#4af8dc;
+	opacity:.9;
+	text-shadow:
+		0 1px 0 #000,
+		0 0 0 rgba(74,248,220,1);
+}
+
+.c:hover {
+	opacity:1;
+	text-shadow:
+		0 1px 0 #000,
+		0 0 40px rgba(74,248,220,1) !important;
+}
+
+.d {
+	color:#fff;
+	opacity:.9;
+	text-shadow:
+		0 1px 0 #000,
+		0 0 0 rgba(255,255,255,1);
+}
+
+.d:hover {
+	opacity:1;
+	text-shadow:
+		0 1px 0 #000,
+		0 0 40px rgba(255,255,255,1) !important;
+}
+
+/* @end */

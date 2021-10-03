@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Rotator Box</title>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="viewport" content="user-scalable=false,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script src="mootools.js" type="text/javascript" charset="utf-8"></script>
+	<script src="Touch.js" type="text/javascript" charset="utf-8"></script>
+	<script src="core.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		window.addEvent('domready',function(){
+			new DragRotate('cube');
+		});
+	</script>
+</head>
+<body>
+	<section class="Template cube" id="cube">
+		<div class="Module face one"></div>
+		<div class="Module face two"></div>
+		<div class="Module face three"></div>
+		<div class="Module face four"></div>
+		<div class="Module face five"></div>
+		<div class="Module face six"></div>
+		<div class="Module shadow"></div>
+	</section>
+</body>
+</html>

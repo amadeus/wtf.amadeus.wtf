@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Layout Generator</title>
+	<script src="https://raw.github.com/amadeus/dbg/master/dbg.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://raw.github.com/cpojer/mootools-class-extras/master/Source/Class.Binds.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Source/Layout.js" type="text/javascript" charset="utf-8"></script>
+	<style type="text/css" media="screen">
+		html, body {
+			padding:0;
+			margin:0;
+			background-color:#333;
+			font-family:Helvetica Neue, Arial, sans-serif;
+		}
+
+		h1 {
+			position:relative;
+			z-index:1;
+			font-size:32px;
+			line-height:1.3em;
+			color:#fff;
+			margin:8px 20px;
+			text-shadow:0 1px 3px rgba(0,0,0,.1);
+		}
+
+		#container {
+			position:absolute;
+			z-index:0;
+			top:40px;
+			left:0;
+			right:0;
+			bottom:0;
+			background-color:#eee;
+		}
+
+		#edit-layout {
+			width:120px;
+		}
+
+		#container.editable {
+			background:#eee url(editable.png) repeat -1px -1px;
+		}
+
+		.editable .layout-unit {
+			cursor:move;
+		}
+
+		.layout-unit {
+			background-color:#fff;
+
+			-webkit-border-radius:4px;
+			-moz-border-radius:4px;
+			-ms-border-radius:4px;
+			-o-border-radius:4px;
+			border-radius:4px;
+
+			-webkit-box-shadow:0 2px 5px rgba(0,0,0,.2);
+			-moz-box-shadow:0 2px 5px rgba(0,0,0,.2);
+			-ms-box-shadow:0 2px 5px rgba(0,0,0,.2);
+			-o-box-shadow:0 2px 5px rgba(0,0,0,.2);
+			box-shadow:0 2px 5px rgba(0,0,0,.2);
+		}
+
+		.layout-unit.dragging {
+			opacity:.7;
+			cursor:move !important;
+			z-index:99999;
+
+			-webkit-box-shadow:0 5px 10px rgba(0,0,0,.4);
+			-moz-box-shadow:0 5px 10px rgba(0,0,0,.4);
+			-ms-box-shadow:0 5px 10px rgba(0,0,0,.4);
+			-o-box-shadow:0 5px 10px rgba(0,0,0,.4);
+			box-shadow:0 5px 10px rgba(0,0,0,.4);
+		}
+
+		.layout-unit.dragging .unit-destroy,
+		.layout-unit.dragging .unit-resize {
+			display:none !important;
+		}
+
+		.unit-resize {
+			position: absolute;
+			display:none;
+			bottom:0;
+			right:0;
+			width: 20px;
+			height: 20px;
+			background-color:rgba(0,0,0,.1);
+			cursor:se-resize;
+			-webkit-border-radius:5px;
+		}
+
+		.unit-destroy {
+			position:absolute;
+			display:none;
+			width:30px;
+			height:30px;
+			top:-15px;
+			left:-15px;
+			background-color:rgba(255,0,0,.2);
+			-webkit-border-radius:200px;
+			cursor:pointer;
+			-webkit-box-shadow:0 2px 5px rgba(0,0,0,.1);
+		}
+
+		.layout-unit:hover .unit-destroy,
+		.layout-unit:hover .unit-resize {
+			display:block;
+		}
+
+		.tools {
+			overflow:hidden;
+		}
+
+		.tools * {
+			float:left;
+		}
+
+		.tools button {
+			margin:12px 0 0 20px;
+		}
+
+		.tools div {
+			margin:14px 0 0 20px;
+			color:#fff;
+			font-size:13px;
+			line-height:16px;
+		}
+	</style>
+</head>
+<body>
+
+<div class="tools" id="tools">
+	<h1>Layout.js</h1>
+	<button id="edit-layout" title="Enable edit mode">Enable Edit Mode</button>
+	<button id="save-layout" title="Save layout to localStorage">Save Layout</button>
+	<button id="reset-layout" title="Clear layout without removing the saved localStorage copy">Reset Layout</button>
+	<button id="load-layout" title="Load layout from localStorage">Load Layout</button>
+	<button id="clear-layout" title="Clear layout and clear from localStorage">Clear Layout</button>
+	<div>Simply double click to add new elements</div>
+</div>
+
+<div id="container"></div>
+
+<script type="text/javascript" charset="utf-8">
+(function(){
+
+// Instantiate Layout.js
+var layoutInstance = window.layoutInstance = new Layout('container');
+
+layoutInstance.addEvent('resizeUnit', function(){
+	dbg.log('resized a unit', arguments);
+});
+
+layoutInstance.addEvent('moveUnit', function(){
+	dbg.log('moved a unit', arguments);
+});
+
+layoutInstance.addEvent('removeUnit', function(){
+	dbg.log('removed a unit', arguments);
+});
+
+layoutInstance.addEvent('addUnit', function(){
+	dbg.log('added a unit', arguments);
+});
+
+layoutInstance.addEvent('clearLayout', function(){
+	dbg.log('cleared a layout', arguments);
+});
+
+// Button Utilities
+var editLayout  = document.id('edit-layout'),
+	saveLayout  = document.id('save-layout'),
+	loadLayout  = document.id('load-layout'),
+	resetLayout = document.id('reset-layout'),
+	clearLayout = document.id('clear-layout'),
+	tools       = document.id('tools');
+
+editLayout.addEvent('click', function(e){
+	if (layoutInstance.editable){
+		layoutInstance.setEditable(false);
+		editLayout.set('text', 'Enable Edit Mode');
+		tools.setStyle('background-color', '#333');
+	} else {
+		layoutInstance.setEditable(true);
+		editLayout.set('text', 'Disable Edit Mode');
+		tools.setStyle('background-color', '#004d94');
+	}
+});
+
+// Save layout to localStorage
+saveLayout.addEvent('click', function(e){
+	e.preventDefault();
+	var json = layoutInstance.getLayout(),
+		toSave = JSON.encode(json);
+
+	if (json && json.length)
+		window.localStorage.layout = toSave;
+});
+
+// Load layout from localStorage
+loadLayout.addEvent('click', function(){
+	var layout = JSON.decode(window.localStorage.layout);
+	layoutInstance.loadLayout(layout);
+});
+
+// Reset current layout, but don't clear saved layout
+resetLayout.addEvent('click', function(){
+	layoutInstance.clearLayout();
+});
+
+// Clear layout from both localStorage and layout instance
+clearLayout.addEvent('click', function(){
+	layoutInstance.clearLayout();
+	window.localStorage.removeItem('layout');
+});
+
+}).call(this);
+</script>
+</body>
+</html>

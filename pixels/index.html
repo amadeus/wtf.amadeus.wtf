@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Pixel Double Test</title>
+	<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width" />
+	<style type="text/css" media="screen">
+		html, body {
+			position:relative;
+			display:block;
+			padding:0;
+			margin:0;
+		}
+
+		.box {
+			position:relative;
+			margin:0 10px;
+			width:100px;
+			height:100px;
+			background-color:rgba(0,0,0,1);
+		}
+
+		#test1 { -webkit-transform: translate3d(1px,0,0); }
+		#test2 { -webkit-transform: translate3d(0.5px,0,0); }
+	</style>
+</head>
+<div id="test1" class="box"></div>
+<div id="test2" class="box"></div>
+<div class="box"></div>
+</html>

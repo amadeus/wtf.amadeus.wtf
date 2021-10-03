@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>index.html</title>
+	<style type="text/css">
+		html, body {
+			position:relative;
+			display:block;
+			width:100%;
+			height:100%;
+			margin:0;
+			padding:0;
+			cursor:pointer;
+		}
+
+		#status {
+			position:absolute;
+			top:50%;
+			margin-top:-40px;
+			width:100%;
+			font-weight:bold;
+			font-family:Helvetica, Arial, sans-serif;
+			font-size:40px;
+			line-height:40px;
+			text-align:center;
+		}
+	</style>
+</head>
+<body>
+
+<div id="status">Click to request a reward</div>
+
+<script type="text/javascript" src="//d3aq14vri881or.cloudfront.net/kiip.js"></script>
+<script type="text/javascript">
+(function(){
+	var kiip = new Kiip('3a5d2340797383f758c7f70a48c9b2bc', function(unit){
+			if (unit) {
+				obj.element.innerHTML = 'Reward received';
+				unit.show();
+			} else {
+				obj.element.innerHTML = 'No reward';
+			}
+
+			clearTimeout(obj.timer);
+			obj.timer = setTimeout(function(){
+				obj.element.innerHTML = 'Click to request a reward';
+			}, 2000);
+		}),
+		obj = {};
+
+	obj.element = document.getElementById('status');
+	// kiip.setTestMode();
+
+	window.document.body.addEventListener('click', function(){
+		clearTimeout(obj.timer);
+		obj.element.innerHTML = 'Requesting reward...';
+		kiip.postMoment('clicked');
+	}, false);
+})();
+</script>
+</body>
+</html>

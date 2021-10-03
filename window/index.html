@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Parent Child Relationship Experiment</title>
+	<style type="text/css" media="screen">
+		html,body {
+			display:block;
+			position:relative;
+			margin:0;
+			padding:0;
+			font-family:Helvetica,Arial,sans-serif;
+		}
+		ol li {
+			margin-bottom:10px;
+		}
+		
+		input {
+			font-size:16px;
+			width:500px;
+			padding:3px 8px;
+		}
+		
+		p {
+			margin:0 0 20px 20px;
+		}
+		
+		h2 {
+			margin:20px;
+		}
+		
+		button {
+			font-size:12px;
+			font-weight:bold;
+		}
+	</style>
+	<script src="mootools.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript" charset="utf-8">
+		var ParentWindow = new Class({
+			initialize:function(switch_id,input_id){ window.addEvent('domready',this.Callbacks.domReady.bind(this,[switch_id,input_id])); },
+			
+			// Where The Messages Stored
+			storedMessages:[],
+			
+			Callbacks:{
+				
+				// Executed when the DOM is Ready
+				domReady:function(switch_id,input_id)
+				{
+					this.element = $(switch_id);
+					this.el_input = $(input_id);
+					this.element.addEvent('click',this.Callbacks.createWindow.bind(this));
+					this.el_input.addEvent('keyup',this.Callbacks.sendMessage.bind(this));
+					this.el_input.disabled = true;
+				},
+				
+				// Creates the child window, if it's closed
+				createWindow:function()
+				{
+					if(!this.opened || this.opened==false)
+					{
+						this.opened = true;
+						this.element.set('text','Close Window');
+						this.win = window.open('child.html','pm_chat', 'width=400, height=400, location=0, scrollbars=1');
+						window.addEvent('unload',(function(){ this.win.close(); }).bind(this));
+						this.timer = setInterval(this.Callbacks.checkWindowDOM.bind(this),200);
+					}
+					else {
+						this.opened = false;
+						this.win.close();
+						this.element.set('text','Open Window');
+					}
+				},
+				
+				// Cross browser check to ensure the child window DOM is ready to be manipulated (Uses some Mootools variable)
+				checkWindowDOM:function()
+				{
+					if(this.win.loaded && this.win.loaded==true)
+					{
+						clearInterval(this.timer);
+						this.timer = null;
+						this.win.Translator = new ChildWindow(this.win);
+						this.win.Translator.Report = this.Callbacks.messageConfirmed.bind(this);
+						this.win.onunload = this.Callbacks.windowUnload.bind(this);
+						this.el_input.disabled = false;
+						if(this.storedMessages.length>0) this.win.Translator.Update(this.storedMessages);
+					}
+				},
+				
+				// If there user presses enter, send the message in the Input box to the child window
+				sendMessage:function(e)
+				{
+					if(e.key!='enter') return;
+					
+					this.storedMessages[this.storedMessages.length] = this.el_input.value;
+					if(this.win.closed==false) this.win.Translator.Update(this.el_input.value.toString());
+				},
+				
+				// The event is fired by the child window to confirm the message was received
+				messageConfirmed:function(){
+					this.el_input.value = '';
+					var test = new Element('p',{ text:'message successfully posted to child window!' }).inject($(document.body));
+					setTimeout((function(test_obj){
+						var the_obj = test_obj;
+						var testFunc = function(){
+							new Fx.Morph(the_obj,{
+								onComplete:function(e)
+								{
+									e.destroy();
+								}
+							}).start({'opacity':[1,0],'height':0,'margin-bottom':0});
+						};
+						return testFunc;
+					})(test),1000);
+				},
+				
+				// This is called when the child window refreshes or closes, the reason for the timeout is to allow the close boolean to be accurate
+				windowUnload:function()
+				{
+					setTimeout(this.Callbacks.windowProblems.bind(this),1);
+				},
+				
+				// Executed when the something has caused the child window to close or refresh
+				windowProblems:function()
+				{
+					if(this.win.closed==false) this.timer = setInterval(this.Callbacks.checkWindowDOM.bind(this),200);
+					else if(this.win.closed==true)
+					{
+						this.opened=false;
+						this.element.set('text','Open Window');
+						this.el_input.disabled = true;
+					}
+				}
+			}
+		});
+		
+		// Instantiated within the child window. A reference to the child window is passed along to ensure proper DOM manipulation
+		var ChildWindow = new Class({
+			initialize:function(scope)
+			{
+				this.scope = scope;
+				this.body = $(scope.document.body);
+				this.body.getChildren().destroy();
+				
+				this.onunload = this.Closing;
+				
+				this.wrapper = new Element('div',{
+					'class':'wrapper'
+				}).inject(this.body);
+				
+				$(this.wrapper).addEvent('click',(function(){ scope.close(); }).bind(this));
+			},
+			
+			Update:function(data)
+			{
+				if($type(data)=='array' && data.length>0)
+				{
+					$A(data).each(function(string){
+						new Element('p',{
+							'text':string
+						}).inject(this.wrapper);
+					},this);
+				}
+				else
+				{
+					new Element('p',{
+						'text':data
+					}).inject(this.wrapper);
+				}
+				
+				new Fx.Scroll(this.wrapper).toBottom();+
+				this.Report();
+			},
+			
+			Report:function(){ return; },
+			
+			Closing:function(){ return; }
+		});
+		
+		new ParentWindow('switch','message_field');
+	</script>
+</head>
+<body>
+	<h2>This example shows a parent/child window relationship. Create the child window with the 'Create Window' button. Type messages into the input box and press 'Enter' to have them post to the child window.</h2>
+	<h2>The contents of the window are stored for the session, regardless of the child window state.</h2>
+	<h2>No Javascript has been placed in the child window except to determine DOM State for the parent window</h2>
+	<ol>
+		<li><button id="switch">Create Window</button></li>
+		<li><input type="text" id="message_field" style="margin-bottom:20px" disabled /></li>
+	</ol>
+</body>
+</html>

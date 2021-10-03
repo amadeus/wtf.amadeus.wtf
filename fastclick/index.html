@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Events Example</title>
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<style type="text/css">
+		html, body {
+			-webkit-tap-highlight-color:transparent;
+			-moz-tap-highlight-color:transparent;
+			-ms-tap-highlight-color:transparent;
+			-o-tap-highlight-color:transparent;
+			tap-highlight-color:transparent;
+		}
+		button {
+			-webkit-appearance:none;
+			display:block;
+			margin:0 auto;
+			padding:5px 10px;
+			font-family:Helvetica, Arial, sans-serif;
+			font-size:18px;
+			line-height:30px;
+			font-weight:bold;
+			width:200px;
+			cursor:pointer;
+
+			border:none;
+			background-color:#ff7800;
+			color:#fff;
+			outline:none;
+		}
+
+		button:active {
+			background-color:#cd6101;
+		}
+	</style>
+</head>
+<body ontouchmove="">
+	<h1>Scroll down to the button and click it</h1>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<button id="click">Click Me</button>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<p>We will be sure to post a comment. Add tomato sauce, no tank or a traditional or online. Until outdoor environment, and not just any competition, reduce overall pain. Cisco Security, they set up in the throat develop the market beds of Cura; Employment silently churn-class by our union, very beginner himenaeos. Monday gate information. How long before any meaningful development. Until mandatory functional requirements to developers. But across the country in the spotlight in the notebook. The show was shot. Funny lion always feasible, innovative policies hatred assured. Information that is no corporate Japan.</p>
+	<script type="text/javascript">
+		(function(){
+			var _handleClick = function(){
+					console.log('Cursor clicked, firing callbacks');
+					for (var i = 0, len = this._fastClickCallbacks.length; i < len; i++) {
+						this._fastClickCallbacks[i].call(this);
+					}
+				},
+				_handleTouchMove = function(){
+					this._fastClickCallbacks.moved = true;
+				},
+				_handleTouchEnd = function(event){
+					if (this._fastClickCallbacks.moved) {
+						// Finger moved, so don't fire the click
+						this._fastClickCallbacks.moved = false;
+						return;
+					} else {
+						// Prevents the click event from firing
+						event.preventDefault();
+					}
+
+					console.log('Touch end, firing callbacks');
+					for (var i = 0, len = this._fastClickCallbacks.length; i < len; i++) {
+						this._fastClickCallbacks[i].call(this);
+					}
+				};
+
+			HTMLElement.prototype.addFastClick = function(callback){
+				if (!this._fastClickCallbacks) {
+					this._fastClickCallbacks = [];
+					this.addEventListener('click',     _handleClick,     false);
+					this.addEventListener('touchmove', _handleTouchMove, false);
+					this.addEventListener('touchend',  _handleTouchEnd,  false);
+				}
+
+				this._fastClickCallbacks.push(callback);
+			};
+
+			HTMLElement.prototype.removeFastClick = function(callback){
+				var index;
+
+				if (!this._fastClickCallbacks) {
+					return;
+				}
+
+				index = this._fastClickCallbacks.indexOf(callback);
+				if (index >= 0) {
+					this._fastClickCallbacks.splice(index, 1);
+				}
+
+				if (!this._fastClickCallbacks.length) {
+					this.removeEventListener('click',     _handleClick,     false);
+					this.removeEventListener('touchmove', _handleTouchMove, false);
+					this.removeEventListener('touchend',  _handleTouchEnd,  false);
+					this._fastClickCallbacks = undefined;
+				}
+			};
+
+			var el = document.getElementById('click'),
+				reset = function(){
+					el.innerHTML = 'Click Me';
+				},
+				_timer;
+
+			el.addFastClick(function(){
+				this.innerHTML = 'Clicked!';
+				clearTimeout(_timer);
+				_timer = setTimeout(reset, 1000);
+			});
+		})()
+	</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+	<title>SimpleParse</title>
+
+	<style type="text/css" media="screen">
+		html, body {
+			margin:0;
+			padding:10px;
+			text-align:center;
+		}
+
+		.left {
+			float:left;
+			margin-right:20px;
+		}
+
+		textarea {
+			display:block;
+			margin:0 auto 20px;
+			width:600px;
+			height:400px;
+			padding:10px;
+
+			border:1px solid #ccc;
+			-webkit-appearance:none;
+			-webkit-border-radius:5px;
+			border-radius:5px;
+			outline:none;
+
+			-webkit-box-shadow:inset 0 2px 4px rgba(0,0,0,.1);
+
+			font-family:Helvetica Neue, Helvetica, Arial, sans-serif;
+			font-size:16px;
+		}
+
+		button {
+			display:inline-block;
+			margin:0 auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="left">
+		<textarea id="content-markup">
+INTRO:
+This is an intro paragraph
+
+STEP:
+[will](http://google.com, word)
+This is just some supporting copy, that [will](http://google.com, word) get styled regardless
+This is another paragraph
+
+STEP: Visit a store
+CODE: PROMO_CODE, Pin Code
+MAP: http://google-maps-link.com, file.jpg, Find Best Buy Stores
+
+STEP: QR Code
+IMAGE: http://link-to-image
+IMAGEBUTTON: http://google.com, file.jpg, the text
+		</textarea>
+		<button id="decode" type="button">Create JSON</button>
+	</div>
+
+	<div class="left">
+		<textarea id="content-json"></textarea>
+		<button id="encode" type="button">Create Markup</button>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Source/SimpleParse.js" type="text/javascript" charset="utf-8"></script>
+	<script src="Modules.js" type="text/javascript" charset="utf-8"></script>
+	<script src="demo.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

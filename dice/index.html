@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<style type="text/css" media="screen">
+		body {
+			font-family:Helvetica;
+			overflow:auto;
+			color:#000;
+			text-align:center;
+			font-size:0;
+		}
+
+		.tools {
+			margin-bottom:40px;
+			margin-top:40px;
+		}
+
+		.tools,
+		#container {
+			font-family:Helvetica;
+			font-weight:bold;
+			font-size:14px;
+			line-height:20px;
+			color:#666;
+		}
+
+		#container {
+			position:relative;
+			display:inline-block;
+			padding:1px 1px 1px 0;
+			height:200px;
+		}
+
+		#container:before,
+		#container:after {
+			position:absolute;
+			display:block;
+		}
+
+		#container:before {
+			content: 'Combined Dice Values';
+			bottom:-55px;
+			width:100%;
+			text-align:left;
+			font-size:9px;
+		}
+
+		#container:after {
+		}
+
+		input {
+			width:40px;
+			border:none;
+			border-bottom:1px solid #ccc;
+			font-family:Helvetica;
+			font-size:16px;
+			font-weight:bold;
+			padding:0 0 5px;
+			text-align:center;
+			outline:none;
+		}
+
+		input:focus {
+			border-bottom-color:#2385ff;
+			color:#2385ff;
+		}
+
+		.column {
+			display:block;
+			position:absolute;
+			height:100%;
+			cursor:pointer;
+		}
+
+		.column .bar {
+			position:absolute;
+			left:0;
+			bottom:0;
+			width:100%;
+			background-color:rgba(0,0,0,0.2);
+			min-height:1px;
+
+			-webkit-transform-origin:50% 100%;
+			   -moz-transform-origin:50% 100%;
+			    -ms-transform-origin:50% 100%;
+			     -o-transform-origin:50% 100%;
+			        transform-origin:50% 100%;
+
+			-webkit-transform:scale(1, 0);
+			   -moz-transform:scale(1, 0);
+			    -ms-transform:scale(1, 0);
+			     -o-transform:scale(1, 0);
+			        transform:scale(1, 0);
+
+			-webkit-transition:-webkit-transform 400ms ease-in-out;
+			        transition:transform 400ms ease-in-out;
+		}
+
+		.column .percentage,
+		.column .number {
+			text-align:center;
+			position:absolute;
+			display:block;
+			bottom:-25px;
+			width:100%;
+			font-size:10px;
+			font-weight:normal;
+
+			-webkit-transition:all 100ms ease-in-out;
+			   -moz-transition:all 100ms ease-in-out;
+			    -ms-transition:all 100ms ease-in-out;
+			     -o-transition:all 100ms ease-in-out;
+			        transition:all 100ms ease-in-out;
+		}
+
+		.column .percentage {
+			display:none;
+			bottom:auto;
+			top:-25px;
+		}
+
+		.column .number {
+			display:none;
+		}
+
+		#container:hover > .column:hover > .number,
+		#container > .column:nth-child(2n+0) .number {
+			display:block;
+		}
+
+		#container:hover > .column > .number {
+			opacity:0.5;
+			-webkit-transform:translate3d(0, 10px, 0);
+			   -moz-transform:translate3d(0, 10px, 0);
+			    -ms-transform:translate3d(0, 10px, 0);
+			     -o-transform:translate3d(0, 10px, 0);
+			        transform:translate3d(0, 10px, 0);
+		}
+
+		#container:hover > .column:hover > .number {
+			opacity:1;
+			-webkit-transform:translate3d(0, 0, 0);
+			   -moz-transform:translate3d(0, 0, 0);
+			    -ms-transform:translate3d(0, 0, 0);
+			     -o-transform:translate3d(0, 0, 0);
+			        transform:translate3d(0, 0, 0);
+		}
+
+		.column:hover {
+			background-color:rgba(35,133,255,0.2);
+			color:#2385ff;
+		}
+
+		.column:hover .percentage {
+			display:block;
+		}
+
+		.column:hover .bar {
+			background-color:rgba(35,133,255,0.4);
+			background-color:rgba(255,0,100,0.4);
+		}
+
+		#container.grow .column .bar {
+			-webkit-transform:scale(1, 1);
+			   -moz-transform:scale(1, 1);
+			    -ms-transform:scale(1, 1);
+			     -o-transform:scale(1, 1);
+			        transform:scale(1, 1);
+		}
+
+		#width {
+			border:none;
+			font-size:14px;
+		}
+
+		#footnote {
+			text-align:center;
+			color:#666;
+			font-size:9px;
+			margin-top:40px;
+		}
+	</style>
+</head>
+<body>
+<div class="tools">
+	<input id="rolls" placeholder="Rolls" title="Rolls" value="1" /> -
+	<input id="number" placeholder="N" title="Number of Dice" value="10" />
+	d
+	<input id="sides" placeholder="S" title="Sides" value="5" />
+	<button id="exec">Execute Rolls</button>
+	<br />
+	<label for="width">Column Width:</label>
+	[<input id="width" value="20" title="Column Width" />]
+	<br />
+	<label for="highest">Take highest roll</label>
+	<input type="checkbox" id="highest" checked>
+</div>
+<div id="container"></div>
+<div id="footnote"></div>
+<script src="dbg.js" type="text/javascript" charset="utf-8"></script>
+<script src="rounding.js" type="text/javascript" charset="utf-8"></script>
+<script src="atlas.js" type="text/javascript" charset="utf-8"></script>
+<script src="rands.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+(function(){ 'use strict';
+
+var ELS = {
+	ROLLS   : document.id('rolls'),
+	RESULTS : document.id('container'),
+	NUMBER  : document.id('number'),
+	SIDES   : document.id('sides'),
+	BTN     : document.id('exec'),
+	WIDTH   : document.id('width'),
+	HIGHEST : document.id('highest'),
+	BUSY: false
+};
+
+var exec = function(){
+	if (ELS.BUSY) {
+		return;
+	}
+
+	var instance;
+
+	ELS.BUSY = true;
+	ELS.RESULTS.className = '';
+	setTimeout(function(){
+		instance = new DiceTests(
+			ELS.ROLLS.value,
+			ELS.NUMBER.value,
+			ELS.SIDES.value,
+			ELS.WIDTH.value,
+			ELS.HIGHEST.checked
+		);
+
+		saveInputs(instance);
+	}, 450);
+	setTimeout(function(){
+		ELS.BUSY = false;
+	}, 900);
+},
+saveInputs = function(instance){
+	var ls = window.localStorage;
+
+	if (!ls) {
+		return;
+	}
+
+	try {
+		ls.setItem('rolls',   instance.rolls);
+		ls.setItem('number',  instance.number);
+		ls.setItem('sides',   instance.sides);
+		ls.setItem('highest', instance.highest);
+		ls.setItem('width',    instance.width);
+	} catch(e) {}
+
+},
+restoreInputs = function(){
+	var ls = window.localStorage;
+
+	if (!ls) {
+		return;
+	}
+
+	try {
+		if (ls.getItem('rolls')) {
+			ELS.ROLLS.value   = ls.getItem('rolls');
+			ELS.NUMBER.value  = ls.getItem('number');
+			ELS.SIDES.value   = ls.getItem('sides');
+			ELS.HIGHEST.value = ls.getItem('highest');
+			ELS.WIDTH.value   = ls.getItem('width');
+		}
+	} catch(e) {}
+};
+
+restoreInputs();
+
+ELS.BTN.addEvent('click', exec);
+
+new DiceTests(
+	ELS.ROLLS.value,
+	ELS.NUMBER.value,
+	ELS.SIDES.value,
+	ELS.WIDTH.value,
+	ELS.HIGHEST.checked
+);
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>List Tests</title>
+	<meta name="viewport" content="user-scalable=false,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width" />
+	<style type="text/css" media="screen">
+		html, body {
+			margin:0; padding:0;
+			font:16px/1.5 Helvetica Neue, Helvetica, Arial, sans-serif;
+			
+			-webkit-text-size-adjust:none;
+
+			background:url(bg.gif);
+			background-size:7px 1px;
+		}
+
+		ul, ol { list-style:none; }
+		ul, ol, li { padding:0; margin:0; }
+
+		.unit-list {
+			margin:16px 10px;
+			border:2px solid #ababab;
+			background-color:#fff;
+		}
+
+		.unit-list li {
+			position:relative;
+			padding:10px 10px;
+			border-bottom:2px solid #ababab;
+			font-weight:bold;
+		}
+		
+		/* Create pixelated corners in unit-list */
+		
+		.unit-list > li:first-of-type {
+			background-color:#fff;
+			border-top:2px solid #ababab;
+			margin-top:-4px;
+			padding-top:6px;
+		}
+
+		.unit-list > li:last-of-type {
+			margin-bottom:-4px;
+			background-color:#fff;
+			padding-bottom:6px;
+		}
+
+		.unit-list > li:first-of-type:before,
+		.unit-list > li:last-of-type:after {
+			content:'';
+			position:absolute;
+			left:2px;
+			right:2px;
+			display:block;
+			height:2px;
+			background-color:#fff;
+		}
+
+		.unit-list > li:first-of-type:before {
+			top:-4px;
+			border-top:2px solid #ababab;
+		}
+
+		.unit-list > li:last-of-type:after {
+			bottom:-4px;
+			border-bottom:2px solid #ababab;
+		}
+	</style>
+</head>
+<body>
+	<ul class="unit-list">
+		<li>A list item</li>
+		<li>This is something else</li>
+		<li>Word</li>
+		<li>A list item</li>
+		<li>This is something else</li>
+		<li>Word</li>
+		<li>A list item</li>
+		<li>This is something else</li>
+		<li>Word</li>
+		<li>A list item</li>
+		<li>This is something else</li>
+		<li>Word</li>
+		<li>A list item</li>
+		<li>This is something else</li>
+		<li>Word</li>
+	</ul>
+</body>
+</html>

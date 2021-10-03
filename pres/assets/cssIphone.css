@@ -1,0 +1,20 @@
+body {
+	min-height:416px;
+	overflow:hidden;
+}
+
+body.landscape {
+	min-height:270px;
+}
+
+img {
+	position:relative;
+	display:block;
+	border-width:5px;
+	max-width:310px
+}
+
+.landscape img {
+	border-width:5px;
+	max-width:480px;
+}

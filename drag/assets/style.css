@@ -1,0 +1,67 @@
+/* @override http://amadeus.local/zinio/assets/style.css */
+
+/* @group CSS Reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}body {line-height:1;}ol,ul{list-style:none;}blockquote,q{quotes:none;}:focus{outline:0;}ins{text-decoration:none;}del{text-decoration:line-through;}table{border-collapse:collapse;border-spacing:0;}
+/* @end */
+
+body {
+	font:62.5%/1.4 Times New Roman,Times,serif;
+	color:#222;
+	-webkit-user-select:none;
+	padding:0;
+	margin:0;
+	height:480px;
+	width:320px;
+}
+
+body.drag {}
+
+.section {
+	padding:8px;
+}
+
+.section h1 {
+	font-family:'Arial',sans-serif;
+	font-size:40px;
+	letter-spacing:-1px;
+	margin-bottom:20px;
+	padding-bottom:10px;
+	border-bottom:1px solid #eee;
+}
+
+.section blockquote {
+	font-size:2.4em;
+}
+
+.section .credit {
+	font-size:1.8em;
+	line-height:1.3em;
+	margin-bottom:20px;
+	padding-bottom:20px;
+	border-bottom:1px solid #eee;
+}
+
+.section .credit strong {
+	font-family:Helvetica,sans-serif;
+	color:#e80016;
+}
+
+#draggable {
+	position:absolute;
+	width:80px;
+	height:80px;
+	background-color:rgb(80,80,80);
+	z-index:1000;;
+}
+
+#info {
+	font-size:18px;
+	font-weight:bold;
+	position:absolute;
+	top:0;
+	padding:20px 0;
+	text-align:center;
+	width:100%;
+	font-family:Helvetica,sans-serif;
+	z-index:2;
+}

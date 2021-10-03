@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>CSSFx.Tween</title>
+	<style type="text/css" media="screen">
+		.Module.box {
+			position:relative;
+			width:100px;
+			height:100px;
+			background-color:blue;
+		}
+		
+		.container {
+			margin:20px;
+			position:relative;
+			width:900px;
+			background-color:#eee;
+		}
+	</style>
+	<script src="mootools.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Source/CSSFx.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Source/CSSFx.CSS.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Source/CSSFx.CubicBezier.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Source/CSSFx.Transitions.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../Source/CSSFx.Tween.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		window.addEvent('domready',function(){
+			var Tweener = new CSSFx.Tween('TweenTest',{
+				duration:2000,
+				link:'ignore',
+				property:'left',
+				transition:[1,0,0,1]
+			});
+			
+			document.id('TweenLeft').addEvent('click',function(){
+				Tweener.start(0);
+			});
+			
+			document.id('TweenCancel').addEvent('click',function(){
+				Tweener.cancel();
+			});
+			
+			document.id('TweenPause').addEvent('click',function(){
+				Tweener.pause();
+			});
+			
+			document.id('TweenResume').addEvent('click',function(){
+				Tweener.resume();
+			});
+			
+			document.id('TweenRight').addEvent('click',function(){
+				Tweener.start(0,800);
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div id="TweenTest" class="Module box"></div>
+	</div>
+	<button id="TweenLeft">Move Box Left from Current Position</button>
+	<button id="TweenCancel">Cancel</button>
+	<button id="TweenPause">Pause</button>
+	<button id="TweenResume">Resume</button>
+	<button id="TweenRight">Move Box Right and Always Start At Left</button>
+</body>
+</html>

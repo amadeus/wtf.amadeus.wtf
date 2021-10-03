@@ -1,0 +1,82 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<button id="button" type="button">Run Tests</button>
+		<script type="text/javascript">
+(function() {
+  let counter = 0;
+  const regex = /^test/;
+  const match = 'test';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const TOTAL_STRINGS = 100000;
+
+  const tests = {
+    regex: function() {
+      var x = 0;
+      while (x < TOTAL_STRINGS) {
+        if (!regex.test(possible)) {
+          counter++;
+        }
+        x += 1;
+      }
+      return this;
+    },
+    indexOf: function() {
+      var x = 0;
+      while (x < TOTAL_STRINGS) {
+        if (possible.indexOf(match) !== 0) {
+          counter++;
+        }
+        x += 1;
+      }
+      return this;
+    },
+    startsWith: function() {
+      var x = 0;
+      while (x < TOTAL_STRINGS) {
+        if (!possible.startsWith(match)) {
+          counter++;
+        }
+        x += 1;
+      }
+      return this;
+    },
+    substr: function() {
+      var x = 0;
+      while (x < TOTAL_STRINGS) {
+        if (possible.substr(0, match.length) !== match) {
+          counter++;
+        }
+        x += 1;
+      }
+      return this;
+    }
+  };
+
+  function runTest() {
+    console.time('regex');
+    tests.regex();
+    console.timeEnd('regex');
+
+    console.time('indexOf');
+    tests.indexOf();
+    console.timeEnd('indexOf');
+
+    console.time('startsWith');
+    tests.startsWith();
+    console.timeEnd('startsWith');
+
+    console.time('substr');
+    tests.substr();
+    console.timeEnd('substr');
+
+    console.log(counter);
+  }
+
+  document.getElementById('button').onclick = runTest;
+})();
+
+		</script>
+	</body>
+</html>

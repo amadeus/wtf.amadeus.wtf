@@ -1,0 +1,304 @@
+/* @group Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* @end */
+
+/* @group General Formatting */
+
+body {
+	font:62.5%/1.3 Helvetica,Arial,sans-serif;
+	color:#333;
+}
+
+#wrapper {
+	min-width:830px;
+}
+
+#header {
+	position:relative;
+	background-color:#000
+}
+
+#introduction {
+	position:relative;
+	height:188px;
+	margin:0 0 0 auto;
+	background:#fff url(images/headerBack.gif) no-repeat 100% 0;
+}
+
+#introduction h1 {
+	height:59px;
+	width:645px;
+	position:absolute;
+	top:50%;
+	right:0px;
+	margin-top:-25px;
+	overflow:hidden;
+	text-indent:-9999px;
+	background:url(images/amadeusDemarzi.gif)
+}
+
+#introduction .about {
+	position:absolute;
+	top:127px;
+	right:10px
+}
+
+#introduction .about a:link,
+#introduction .about a:visited {
+	display:block;
+	color:#fff;
+	background-color:#000;
+	font-size:30px;
+	font-weight:bold;
+	text-decoration:none;
+	line-height:.75em;
+	text-transform:lowercase
+}
+
+#introduction .about a:hover {
+	color:#000;
+	background-color:#fff;
+}
+
+#byLine {
+	float:right;
+	margin-right:315px;
+	height:164px;
+	width:420px;
+	padding:10px 5px 0 90px;
+	text-align:right;
+	color:#fff;
+	font-size:4.0em;
+	font-weight:bold;
+	text-transform:lowercase;
+	letter-spacing:-4px;
+	line-height:.9em;
+}
+
+#projects {
+	position:absolute;
+	right:0;
+	width:295px;
+	height:154px;
+	padding:10px 0 10px 10px;
+	background-color:#fff;
+	overflow:hidden;
+}
+
+#projects li {
+	margin:10px 0 30px;
+}
+
+#projects li h2 {
+	font-size:4.6em;
+	letter-spacing:-4px;
+	line-height:.7em;
+	margin-bottom:5px;
+}
+
+#projects li p {
+	font-size:1.6em;
+	line-height:1em;
+}
+
+#projects li a,
+#projects li a:link,
+#projects li a:visited {
+	background-color:#fff;
+	color:#000;
+	text-decoration:none;
+	display:block;
+}
+
+#projects li a:hover {
+	background-color:#000;
+	color:#fff;
+}
+
+#pageContent {
+	position:relative;
+		background-color:#000;
+}
+
+#pageContent h2 {
+	position:absolute;
+	top:-25px;
+	right:738px;
+	width:95px;
+	font-size:35px;
+	color:#fff;
+	text-transform:uppercase;
+	line-height:.8em;
+}
+
+#content {
+	margin-right:305px;
+	background-color:#fff;
+	padding:10px 10px 10px 0;
+}
+
+
+#extras {
+	color:#fff;
+	width:305px;
+	float:right;
+	height:100%;
+}
+
+#header:after,
+#pageContent:after {
+	content:'';
+	display:block;
+	clear:both;
+	height:0;
+	visibility:hidden;
+}
+
+/* @end */
+
+/* @group Post formatting */
+.post {
+	margin-bottom:40px;
+}
+
+.postHead {
+	background-color:#000;
+	color:#fff;
+	position:relative;
+	margin:0 0 10px;
+}
+
+.postHead.p1 { background-color:rgb(249,38,114); }
+.postHead.p2 { background-color:rgb(166,226,46); }
+.postHead.p3 { background-color:rgb(102,217,239); }
+
+.postHead h3 {
+	width:410px;
+	margin:0 0 0 auto;
+	font-size:45px;
+	line-height:.75em;
+	letter-spacing:-5px;
+	text-align:right;
+	padding-right:4px
+}
+
+.postDate {
+	position:absolute;
+	width:95px;
+	right:420px;
+	top:0;
+	text-transform:uppercase;
+	font-size:1.5em;
+	line-height:.7em;
+	text-align:right;
+}
+
+.postDate .month {
+	display:block;
+	margin-bottom:5px
+}
+
+.postContent {
+	width:410px;
+	margin:0 0 0 auto;
+}
+
+.postContent p {
+	font-size:1.8em;
+	margin-bottom:25px;
+}
+
+/* @end */
+
+/* @group Sidebar */
+#extras {
+	padding-top:10px;
+}
+
+.module {
+	padding:0 0 5px;
+}
+
+.module h3 {
+	padding:0 10px;
+	font-size:40px;
+	color:#000;
+	background-color:#fff;
+	line-height:.7em;
+	letter-spacing:-3px;
+	margin:0 0 10px
+}
+/*
+#archives.module h3 { background-color:#fcff00; }
+#profiles.module h3 { background-color:#ff2828; }
+*/
+.module ul li {
+	margin-bottom:5px
+}
+
+.module ul li a,
+.module ul li a:link,
+.module ul li a:visited {
+	display:block;
+	color:#fff;
+	text-decoration:none;
+	font-size:2.2em;
+	line-height:1em;
+	padding:0 10px;
+}
+
+.module ul li a:hover {
+	background-color:#fff;
+	color:#000
+}
+
+/* @end */

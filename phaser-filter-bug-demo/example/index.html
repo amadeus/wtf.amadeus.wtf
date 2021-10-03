@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Resolutions and Filter</title>
+	<style type="text/css">
+		body {
+			font-family:Helvetica Neue, Helvetica, Arial, sans-serif;
+			background-color:#333;
+			color:#fff;
+		}
+
+		body > h1,
+		body > p,
+		body > div {
+			width:480px;
+			margin:0 auto 2em;
+		}
+		body > h1 {
+			margin-bottom:0.5em;
+		}
+	</style>
+</head>
+<body>
+	<h1>Resolutions and Filter</h1>
+
+	<p>I have some questions about how resolution and filters should work. Currently I will describe the situation as it results including your fixes, and then I will go into what my desired aesthetic is.</p>
+	<p>I create pixel art at absolute pixel size. If I were to render the game at this size, it would make everything very small and hard to use. I've opted to disable anti-aliasing, and set a resolution of 6, and a scale of 3. This is to support retina displays, otherwise the resolution would exactly match the scale. At it's essence though, I want the pixel art to display at 3x it's normal size and I want the entire game world to also be limited and operate at these absolute pixel size, including all rendering (and filters).</p>
+	<p>I am going for a very sharp, classic, yet modern pixel aesthetic. Scaling and resolution parameters work great since it forces my entire game world to a very nice clean pixel grid. I do not want want sub pixel transformations or movement. However, it appears that filters do not respect this pixel grid and instead apply to the full resolution of the entire scene as a result of the resolution parameter. Here is a screenshot with the stuff I have put together, using a variety of filters. I have blown up the image and used CSS to ensure a pixelated scale (probably requires Chrome to see properly).</p>
+	<div><img src="example-resolution.png" width="480" height="480" style="image-rendering:-moz-crisp-edges;image-rendering:-o-crisp-edges;image-rendering:-webkit-optimize-contrast;image-rendering: crisp-edges;image-rendering:pixelated;-ms-interpolation-mode:nearest-neighbor;" /></div>
+	<p>I can't really necessarily say this is the wrong way to do it, however the results create an effect that breaks the nice sharp pixel grid aesthetic that I am going for. I also think it doesn't look very good since you get a lot of weird and strange rendering artifacts based on rounding errors.</p>
+	<p>In my ideal world, and the way I would assume that filters should work, or at least it should be an option, is that the filters are applied at the initial scale/size of all the assets, regardless of resolution, and then once the filters are applied, the image is scaled up, based on whether you use nearest neighbor or linear scaling.</p>
+	<p>My ideal and target aesthetic is that the rendered scene would look like this:</p>
+	<div><img src="example-pixel.png" width="480" height="480" style="image-rendering:-moz-crisp-edges;image-rendering:-o-crisp-edges;image-rendering:-webkit-optimize-contrast;image-rendering: crisp-edges;image-rendering:pixelated;-ms-interpolation-mode:nearest-neighbor;" /></div>
+	<p>It maintains the pixel grid perfectly and results in a very true aesthetic. This also has the huge added benefit of the filter applying to a much smaller resolution and therefore computationally much cheaper.</p>
+	<p>I also realize a valid argument could be made for both sides of this discussion, so I'm not here to say it's being done 'wrong', just being done in a way that works against what I am trying to do.</p>
+	<p>I also realize this is becoming a bit of a rabbit hole of an issue so depending on what you think, it may only be fair to start paying you for some of this</p>
+	<p>The resulting scene should look something like this:</p>
+	<div style="width:804px;"><img src="example-full.png" width="804" style="height:auto;image-rendering:-moz-crisp-edges;image-rendering:-o-crisp-edges;image-rendering:-webkit-optimize-contrast;image-rendering: crisp-edges;image-rendering:pixelated;-ms-interpolation-mode:nearest-neighbor;" /></div>
+	<p>And just for reference, this is what it looks like currently, with the way resolution and filters work together:</p>
+	<div style="width:804px;"><img src="example-full-resolution.png" width="804" style="height:auto;image-rendering:-moz-crisp-edges;image-rendering:-o-crisp-edges;image-rendering:-webkit-optimize-contrast;image-rendering: crisp-edges;image-rendering:pixelated;-ms-interpolation-mode:nearest-neighbor;" /></div>
+</body>
+</html>

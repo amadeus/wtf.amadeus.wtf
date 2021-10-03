@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style type="text/css">
+	html, body {
+		margin:0;
+		padding:0;
+		font-family:Helvetica Neue, Helvetica, Arial, sans-serif;
+	}
+
+	body {
+		display:block;
+		width:400px;
+		margin:0 auto;
+		padding:20px 0 0 10px;
+	}
+
+	.but {
+		clear:both;
+		margin-bottom:10px;
+		overflow:hidden;
+	}
+
+	#amadeus, #enemy {
+		float:left;
+		margin:0 10px 0 0;
+		width:190px;
+		margin-bottom:20px;
+		white-space: pre;
+		font-family:Courier;
+	}
+
+	#log {
+		clear:both;
+		padding:10px 0;
+		font-size:13px;
+	}
+
+	button {
+		width:190px;
+		margin:0 10px 5px 0;
+		padding:4px;
+		float:left;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+
+		font-family:Helvetica Neue, Helvetica, Arial, sans-serif;
+		font-weight:bold;
+	}
+	</style>
+</head>
+<body>
+
+<button id="levelup-amadeus">Increase Amadeus's Level</button>
+<button id="levelup-enemy">Increase Enemy's Level</button>
+<div id="amadeus"></div>
+<div id="enemy"></div>
+
+<div class="but">
+	<button id="simulate-attack1">determineAttack ==&gt;</button>
+	<button id="simulate-attack2">&lt;== determineAttack</button>
+	<br />
+	<button id="simulate-damage1">determineDamage ==&gt;</button>
+	<button id="simulate-damage2">&lt;== DetermineDamage</button>
+	<br />
+	<br />
+	<button id="simulate-battle">Sim Battle</button>
+	<button id="simulate-battles">Sim 1000 Battles</button>
+	<br />
+	<button id="reset">Reset Health</button>
+	<button id="clear">Clear Log</button>
+</div>
+
+<div id="log"></div>
+
+<script src="atlas.js" type="text/javascript" charset="utf-8"></script>
+<script src="character.js" type="text/javascript" charset="utf-8"></script>
+<script src="tests.js" type="text/javascript"></script>
+</body>
+</html>

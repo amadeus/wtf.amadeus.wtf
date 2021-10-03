@@ -1,0 +1,46 @@
+html {
+	font-size:101%;
+	height:100%;
+}
+
+body {
+	position:relative;
+	height:100%;
+	zoom:1;
+	overflow:visible;
+}
+
+.TerminalLog,
+.TerminalInputContainer {
+	zoom:1;
+}
+
+* html .TerminalInputContainer { margin-top:-8px; }
+*+html .TerminalInputContainer { margin-top:-8px; }
+
+
+* html .TerminalCursor,
+* html .InputDisplay,
+* html .AnimationCursor {
+	zoom:1;
+	display:inline;
+	margin:0;
+	vertical-align:middle;
+	padding:0;
+	height:20px;
+	line-height:18px;
+}
+
+*+html .TerminalCursor,
+*+html .InputDisplay,
+*+html .AnimationCursor {
+	zoom:1;
+	display:inline;
+	margin:0;
+	vertical-align:middle;
+	padding:0;
+	height:20px;
+	line-height:18px;
+}
+
+*+html .InputDisplay { margin-top:2px; }

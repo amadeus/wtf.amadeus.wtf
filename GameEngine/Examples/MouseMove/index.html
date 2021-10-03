@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>GameEngine Example</title>
+	<meta name="viewport" content="user-scalable=false,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,width=device-width" />
+	<style type="text/css" media="screen">
+		body { overflow:hidden; font:10px/1.4 Helvetica,Arial,sans-serif; }
+		h1 { position:relative; z-index:1; text-align:center; }
+		.disc { /*-webkit-border-radius:10px; -moz-border-radius:10px; */ width:20px; height:20px; margin:-10px 0 0 -10px; }
+	</style>
+	<script src="../mootools.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../Source/GameEngine.js" type="text/javascript" charset="utf-8"></script>
+	<script src="FollowMouse.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		window.addEvent('domready',function(){
+			var instance = new GameEngine({ autostart: true });
+
+			(100).times(function(){
+				new FollowMouse(instance,{
+					x: Number.random(-2000,2000),
+					y: Number.random(-2000,2000),
+					friction: Number.random(10,100),
+					//,'+Number.random(20,100)/100+'
+					color:'rgb('+Number.random(0,255)+','+Number.random(0,255)+','+Number.random(0,255)+')'
+				});
+			});
+
+			var toggleEngine = function(e){
+				if (e.key !== 'space') return;
+				(instance.running === true) ? instance.stop() : instance.start();
+			};
+
+			window.addEvent('keydown',toggleEngine);
+		});
+	</script>
+</head>
+<body>
+<h1>Press Spacebar to Start/Stop GameEngine</h1>
+</body>
+</html>

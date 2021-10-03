@@ -1,0 +1,13 @@
+{"images":[
+["testSlideshow/01.jpg","653","454"],
+["testSlideshow/02.jpg","653","449"],
+["testSlideshow/03.jpg","460","518"],
+["testSlideshow/04.jpg","653","435"],
+["testSlideshow/05.jpg","653","476"],
+["testSlideshow/06.jpg","653","458"],
+["testSlideshow/07.jpg","653","449"],
+["testSlideshow/08.jpg","653","453"],
+["testSlideshow/09.jpg","653","446"],
+["testSlideshow/10.jpg","653","481"],
+["testSlideshow/11.jpg","653","421"]
+]}
