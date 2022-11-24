@@ -16,6 +16,8 @@ if (!window.requestAnimationFrame) {
 sqrt = Math.sqrt;
 pow  = Math.pow;
 
+var EDGE_OFFSET = 10;
+
 Engine = Base.extend({
 
 	scale: window.devicePixelRatio || 1,
@@ -161,24 +163,24 @@ Engine = Base.extend({
 				).div(dt)
 			);
 
-			if (particle.pos.y > this.height + this.radius) {
-				particle.pos.y = this.height + this.radius;
-				particle.vel.y = 0;
+			if (particle.pos.y > this.height - EDGE_OFFSET) {
+				particle.pos.y = this.height - EDGE_OFFSET;
+				particle.vel.y *= -0.2
 			}
 
-			if (particle.pos.y < -(this.radius)) {
-				particle.pos.y = -(this.radius);
-				particle.vel.y = 0;
+			if (particle.pos.y < EDGE_OFFSET) {
+				particle.pos.y = EDGE_OFFSET;
+				particle.vel.y *= -0.2
 			}
 
-			if (particle.pos.x > this.width + this.radius) {
-				particle.pos.x = this.width + this.radius;
-				particle.vel.x = 0;
+			if (particle.pos.x > this.width - EDGE_OFFSET) {
+				particle.pos.x = this.width - EDGE_OFFSET;
+				particle.vel.x *= -0.2
 			}
 
-			if (particle.pos.x < -this.radius) {
-				particle.pos.x = -this.radius;
-				particle.vel.x = 0;
+			if (particle.pos.x < EDGE_OFFSET) {
+				particle.pos.x = EDGE_OFFSET;
+				particle.vel.x *= -0.2;
 			}
 
 			particle.posOld.set(particle.pos);
