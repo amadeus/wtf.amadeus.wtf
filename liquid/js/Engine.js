@@ -174,7 +174,8 @@
         particle.posOld.set(particle.pos);
         var gravity = this.controls.gravity;
         if (gravity != null) {
-          particle.vel.add(gravity);
+          const percentage = (this.gravity / 4000) * 2;
+          particle.vel.add(gravity.clone().mult(percentage));
         } else {
           reuse.x = 0;
           reuse.y = this.gravity * dt;
