@@ -8,7 +8,7 @@ body {
   height: 100%;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   color: #fff;
-
+  touch-action: none;
   background: #1a1a1a;
 }
 
@@ -45,7 +45,8 @@ canvas {
 }
 
 .controls[data-minimize] label,
-.controls[data-minimize] input {
+.controls[data-minimize] input,
+.controls[data-minimize] button {
   display: none;
 }
 
@@ -94,6 +95,13 @@ canvas {
 
 .controls div {
   font-size: 10px;
+}
+
+.gravity-toggle {
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 16px;
 }
 
 @media screen and (max-width: 640px) {

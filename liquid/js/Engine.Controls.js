@@ -8,8 +8,13 @@
     };
   }
 
+  function hasMotionSupport() {
+    return 'DeviceMotionEvent' in window && window.DeviceMotionEvent.requestPermission != null;
+  }
+
   Engine.Controls = Base.extend({
     shown: true,
+    useDeviceAccellerometer: false,
 
     constructor: function (engine) {
       this.engine = engine;
@@ -19,16 +24,29 @@
 
       // Hide the controls on mobile, by default...
       if (window.innerWidth <= 640) {
-        this.toggleControls();
+        // this.toggleControls();
       }
 
       this.generateControls();
+      this.handleDeviceMotion = this.handleDeviceMotion.bind(this);
 
       this.attach();
     },
 
+    handleDeviceMotion: function (event) {
+      console.log('Event is', event);
+    },
+
     generateControls: function () {
       var html = '<h1>Environment Settings</h1><div class="inner-container">';
+
+      if (hasMotionSupport()) {
+        html += Engine.Controls.ButtonTemplate.substitute({
+          id: 'gravity-button',
+          text: 'Enable Accellerometer',
+          className: 'gravity-toggle',
+        });
+      }
 
       Engine.Controls.Ranges.forEach(function (obj) {
         obj.value = this.engine[obj.id];
@@ -42,6 +60,7 @@
       document.body.appendChild(this.container);
 
       this.totalParticle = document.getElementById('total-particles');
+      this.gravityButton = document.getElementById('gravity-button');
     },
 
     setTotalParticles: function (total) {
@@ -51,12 +70,27 @@
 
     attach: function () {
       this.container.addEventListener('touchmove', this.stopPropagation, false);
-
       this.container.addEventListener('input', this._handleChange.bind(this), false);
-
       this.controlTitle = this.container.querySelector('h1');
-
       this.controlTitle.addEventListener('click', this.toggleControls.bind(this), false);
+      if (this.gravityButton != null) {
+        this.gravityButton.addEventListener('click', this.toggleGravity.bind(this), false);
+      }
+    },
+
+    toggleGravity: function (event) {
+      if (!hasMotionSupport()) return;
+      window.DeviceMotionEvent.requestPermission().then((response) => {
+        if (response === 'granted' && !this.useDeviceAccellerometer) {
+          this.useDeviceAccellerometer = true;
+          window.addEventListener('devicemotion', this.handleDeviceMotion);
+          this.gravityButton.innerHTML = 'Disable Accellerometer';
+        } else {
+          this.useDeviceAccellerometer = false;
+          window.removeEventListener('devicemotion', this.handleDeviceMotion);
+          this.gravityButton.innerHTML = 'Enable Accellerometer';
+        }
+      });
     },
 
     toggleControls: function (event) {
@@ -147,4 +181,5 @@
     'value="{value}" ',
     '/>',
   ].join('');
+  Engine.Controls.ButtonTemplate = ['<button type="button" id={id} class="{className}">{text}</button>'].join('');
 })(window.Engine, window.Base);
