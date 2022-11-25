@@ -10,6 +10,7 @@ body {
   color: #fff;
   /* touch-action: none; */
   background: #1a1a1a;
+  user-select: none;
 }
 
 canvas {
