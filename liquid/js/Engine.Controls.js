@@ -35,7 +35,7 @@
     },
 
     handleDeviceMotion: function (event) {
-      this.gravity = new Vector(event.accelerationIncludingGravity.x, event.accelerationIncludingGravity.y);
+      this.gravity = new Vector(event.accelerationIncludingGravity.x, event.accelerationIncludingGravity.y * -1);
     },
 
     generateControls: function () {
