@@ -14,12 +14,7 @@
     })();
   }
 
-  var devMode = window.location.hash === '#dev';
-
   function getWindowOrientation() {
-    if (!devMode) {
-      return 0;
-    }
     const orientation = window.orientation;
     switch (orientation) {
       case 0:
@@ -58,7 +53,6 @@
     // Default settings
     gravity: 2000,
     smoothingRadius: 56,
-    // stiff: 0.001,
     stiff: 1425,
     stiffN: 1520,
     restDensity: 4.35,
