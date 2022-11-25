@@ -14,6 +14,36 @@
     })();
   }
 
+  var devMode = window.location.hash === '#dev';
+
+  function getWindowOrientation() {
+    if (!devMode) {
+      return 0;
+    }
+    const orientation = window.orientation;
+    switch (orientation) {
+      case 0:
+      case 90:
+      case -90:
+      case 180:
+        return orientation;
+      default:
+        return 0;
+    }
+  }
+
+  function getGravityVectorBasedOnOrientation(vec, orientation) {
+    switch (orientation) {
+      case 90:
+      case -90:
+        return new Vector(vec.y, vec.x);
+      case 180:
+      default:
+      case 0:
+        return vec.clone();
+    }
+  }
+
   sqrt = Math.sqrt;
   pow = Math.pow;
 
@@ -172,10 +202,10 @@
         }
 
         particle.posOld.set(particle.pos);
-        var gravity = this.controls.gravity;
-        if (gravity != null) {
-          const percentage = (this.gravity / 4000) * 6;
-          particle.vel.add(gravity.clone().mult(percentage));
+        if (this.controls.gravity != null) {
+          var percentage = (this.gravity / 4000) * 6;
+          var gravity = getGravityVectorBasedOnOrientation(this.controls.gravity, getWindowOrientation());
+          particle.vel.add(gravity.mult(percentage));
         } else {
           reuse.x = 0;
           reuse.y = this.gravity * dt;
