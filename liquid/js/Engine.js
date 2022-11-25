@@ -35,8 +35,9 @@
   function getGravityVectorBasedOnOrientation(vec, orientation) {
     switch (orientation) {
       case 90:
+        return new Vector(vec.y, vec.x * -1);
       case -90:
-        return new Vector(vec.y, vec.x);
+        return new Vector(vec.y * -1, vec.x);
       case 180:
       default:
       case 0:
