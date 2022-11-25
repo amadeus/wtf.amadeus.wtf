@@ -44,7 +44,7 @@
       if (hasMotionSupport()) {
         html += Engine.Controls.ButtonTemplate.substitute({
           id: 'gravity-button',
-          text: 'Enable Accellerometer',
+          text: 'Enable Accelerometer',
           className: 'gravity-toggle',
         });
       }
