@@ -8,7 +8,7 @@ body {
   height: 100%;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   color: #fff;
-  touch-action: none;
+  /* touch-action: none; */
   background: #1a1a1a;
 }
 
