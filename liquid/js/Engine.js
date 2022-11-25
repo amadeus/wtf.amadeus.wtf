@@ -17,6 +17,7 @@ sqrt = Math.sqrt;
 pow  = Math.pow;
 
 var EDGE_OFFSET = 10;
+var EDGE_BOUNCE_DAMPENING = -0.4
 
 Engine = Base.extend({
 
@@ -31,7 +32,7 @@ Engine = Base.extend({
 	restDensity: 4.35,
 	totalParticles: 200,
 	frameCounter: 0,
-	radius: 1,
+	radius: 4,
 
 	particles: null,
 
@@ -165,22 +166,22 @@ Engine = Base.extend({
 
 			if (particle.pos.y > this.height - EDGE_OFFSET) {
 				particle.pos.y = this.height - EDGE_OFFSET;
-				particle.vel.y *= -0.2
+				particle.vel.y *= EDGE_BOUNCE_DAMPENING;
 			}
 
 			if (particle.pos.y < EDGE_OFFSET) {
 				particle.pos.y = EDGE_OFFSET;
-				particle.vel.y *= -0.2
+				particle.vel.y *= EDGE_BOUNCE_DAMPENING;
 			}
 
 			if (particle.pos.x > this.width - EDGE_OFFSET) {
 				particle.pos.x = this.width - EDGE_OFFSET;
-				particle.vel.x *= -0.2
+				particle.vel.x *= EDGE_BOUNCE_DAMPENING;
 			}
 
 			if (particle.pos.x < EDGE_OFFSET) {
 				particle.pos.x = EDGE_OFFSET;
-				particle.vel.x *= -0.2;
+				particle.vel.x *= EDGE_BOUNCE_DAMPENING;
 			}
 
 			particle.posOld.set(particle.pos);
