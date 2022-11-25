@@ -172,9 +172,14 @@
         }
 
         particle.posOld.set(particle.pos);
-        reuse.x = 0;
-        reuse.y = this.gravity * dt;
-        particle.vel.add(reuse);
+        var gravity = this.controls.gravity;
+        if (gravity != null) {
+          particle.vel.add(gravity);
+        } else {
+          reuse.x = 0;
+          reuse.y = this.gravity * dt;
+          particle.vel.add(reuse);
+        }
         particle.pos.add(particle.vel.mult(dt));
         particle.dens = 0;
         particle.densN = 0;

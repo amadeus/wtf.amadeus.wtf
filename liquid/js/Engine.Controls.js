@@ -1,4 +1,4 @@
-(function (Engine, Base) {
+(function (Engine, Base, Vector) {
   if (!String.prototype.substitute) {
     String.prototype.substitute = function (object, regexp) {
       return String(this).replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
@@ -15,6 +15,7 @@
   Engine.Controls = Base.extend({
     shown: true,
     useDeviceAccellerometer: false,
+    gravity: null,
 
     constructor: function (engine) {
       this.engine = engine;
@@ -24,7 +25,7 @@
 
       // Hide the controls on mobile, by default...
       if (window.innerWidth <= 640) {
-        // this.toggleControls();
+        this.toggleControls();
       }
 
       this.generateControls();
@@ -34,7 +35,7 @@
     },
 
     handleDeviceMotion: function (event) {
-      console.log('Event is', event);
+      this.gravity = new Vector(event.accelerationIncludingGravity.x, event.accelerationIncludingGravity.y);
     },
 
     generateControls: function () {
@@ -89,6 +90,7 @@
           this.useDeviceAccellerometer = false;
           window.removeEventListener('devicemotion', this.handleDeviceMotion);
           this.gravityButton.innerHTML = 'Enable Accellerometer';
+          this.gravity = null;
         }
       });
     },
@@ -182,4 +184,4 @@
     '/>',
   ].join('');
   Engine.Controls.ButtonTemplate = ['<button type="button" id={id} class="{className}">{text}</button>'].join('');
-})(window.Engine, window.Base);
+})(window.Engine, window.Base, window.Vector);
