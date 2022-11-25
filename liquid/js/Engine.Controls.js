@@ -1,167 +1,150 @@
-(function(
-	Engine,
-	Base
-){
+(function (Engine, Base) {
+  if (!String.prototype.substitute) {
+    String.prototype.substitute = function (object, regexp) {
+      return String(this).replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
+        if (match.charAt(0) == '\\') return match.slice(1);
+        return object[name] !== null ? object[name] : '';
+      });
+    };
+  }
 
-if (!String.prototype.substitute) {
-	String.prototype.substitute = function(object, regexp){
-		return String(this).replace(regexp || (/\\?\{([^{}]+)\}/g), function(match, name){
-			if (match.charAt(0) == '\\') return match.slice(1);
-			return (object[name] !== null) ? object[name] : '';
-		});
-	};
-}
+  Engine.Controls = Base.extend({
+    shown: true,
 
-Engine.Controls = Base.extend({
+    constructor: function (engine) {
+      this.engine = engine;
 
-	shown: true,
+      this.container = document.createElement('div');
+      this.container.className = 'controls';
 
-	constructor: function(engine){
-		this.engine = engine;
+      // Hide the controls on mobile, by default...
+      if (window.innerWidth <= 640) {
+        this.toggleControls();
+      }
 
-		this.container = document.createElement('div');
-		this.container.className = 'controls';
+      this.generateControls();
 
-		// Hide the controls on mobile, by default...
-		if (window.innerWidth <= 640) {
-			this.toggleControls();
-		}
+      this.attach();
+    },
 
-		this.generateControls();
+    generateControls: function () {
+      var html = '<h1>Environment Settings</h1><div class="inner-container">';
 
-		this.attach();
-	},
+      Engine.Controls.Ranges.forEach(function (obj) {
+        obj.value = this.engine[obj.id];
+        html += Engine.Controls.ControlTemplate.substitute(obj);
+      }, this);
 
-	generateControls: function(){
-		var html = '<h1>Environment Settings</h1><div class="inner-container">';
+      html += '</div><div>Total Particles: <span id="total-particles">0</span></div>';
 
-		Engine.Controls.Ranges.forEach(function(obj){
-			obj.value = this.engine[obj.id];
-			html += Engine.Controls.ControlTemplate.substitute(obj);
-		}, this);
+      this.container.innerHTML += html;
 
-		html += '</div><div>Total Particles: <span id="total-particles">0</span></div>';
+      document.body.appendChild(this.container);
 
-		this.container.innerHTML += html;
+      this.totalParticle = document.getElementById('total-particles');
+    },
 
-		document.body.appendChild(this.container);
+    setTotalParticles: function (total) {
+      this.totalParticle.innerHTML = total || 0;
+      return this;
+    },
 
-		this.totalParticle = document.getElementById('total-particles');
-	},
+    attach: function () {
+      this.container.addEventListener('touchmove', this.stopPropagation, false);
 
-	setTotalParticles: function(total){
-		this.totalParticle.innerHTML = total || 0;
-		return this;
-	},
+      this.container.addEventListener('input', this._handleChange.bind(this), false);
 
-	attach: function(){
-		this.container.addEventListener(
-			'touchmove',
-			this.stopPropagation,
-			false
-		);
+      this.controlTitle = this.container.querySelector('h1');
 
-		this.container.addEventListener(
-			'input',
-			this._handleChange.bind(this),
-			false
-		);
+      this.controlTitle.addEventListener('click', this.toggleControls.bind(this), false);
+    },
 
-		this.controlTitle = this.container.querySelector('h1');
+    toggleControls: function (event) {
+      if (event && event.preventDefault) {
+        event.preventDefault();
+      }
 
-		this.controlTitle.addEventListener(
-			'click',
-			this.toggleControls.bind(this),
-			false
-		);
-	},
+      if (this.shown) {
+        this.container.setAttribute('data-minimize', 1);
+        this.shown = false;
+      } else {
+        this.container.removeAttribute('data-minimize');
+        this.shown = true;
+      }
+    },
 
-	toggleControls: function(event){
-		if (event && event.preventDefault) {
-			event.preventDefault();
-		}
+    _handleChange: function (event) {
+      var target = event.target,
+        key = target.id,
+        value = parseFloat(target.value) || 0;
 
-		if (this.shown) {
-			this.container.setAttribute('data-minimize', 1);
-			this.shown = false;
-		} else {
-			this.container.removeAttribute('data-minimize');
-			this.shown = true;
-		}
-	},
+      this.engine[key] = value;
 
-	_handleChange: function(event){
-		var target = event.target,
-			key = target.id,
-			value = parseFloat(target.value) || 0;
+      document.getElementById(key + '_value').innerHTML = value;
+    },
 
-		this.engine[key] = value;
+    stopPropagation: function (event) {
+      event.stopPropagation();
+    },
+  });
 
-		document.getElementById(key + '_value').innerHTML = value;
-	},
+  Engine.Controls.Ranges = [
+    {
+      id: 'gravity',
+      label: 'Gravity',
+      min: 0,
+      max: 4000,
+      step: 1,
+    },
+    {
+      id: 'smoothingRadius',
+      label: 'Smoothing Radius',
+      min: 1,
+      max: 100,
+      step: 1,
+    },
+    {
+      id: 'stiff',
+      label: 'Stiffness',
+      min: 1,
+      max: 10000,
+      step: 1,
+    },
+    {
+      id: 'stiffN',
+      label: 'Stiffness Near',
+      min: 1,
+      max: 10000,
+      step: 1,
+    },
+    {
+      id: 'restDensity',
+      label: 'Rest Density',
+      min: 1,
+      max: 10,
+      step: 0.01,
+    },
+    {
+      id: 'radius',
+      label: 'Particle Radius',
+      min: 1,
+      max: 20,
+      step: 1,
+    },
+  ];
 
-	stopPropagation: function(event){
-		event.stopPropagation();
-	}
-
-});
-
-Engine.Controls.Ranges = [
-	{
-		id    : 'gravity',
-		label : 'Gravity',
-		min   : 0,
-		max   : 4000,
-		step  : 1
-	}, {
-		id    : 'smoothingRadius',
-		label : 'Smoothing Radius',
-		min   : 1,
-		max   : 100,
-		step  : 1
-	}, {
-		id    : 'stiff',
-		label : 'Stiffness',
-		min   : 1,
-		max   : 10000,
-		step  : 1
-	}, {
-		id    : 'stiffN',
-		label : 'Stiffness Near',
-		min   : 1,
-		max   : 10000,
-		step  : 1
-	}, {
-		id    : 'restDensity',
-		label : 'Rest Density',
-		min   : 1,
-		max   : 10,
-		step  : 0.01
-	}, {
-		id    : 'radius',
-		label : 'Particle Radius',
-		min   : 1,
-		max   : 20,
-		step  : 1
-	}
-];
-
-Engine.Controls.ControlTemplate = [
-	'<label for="{id}">',
-		'{label}: ',
-		'<span id="{id}_value">{value}</span>',
-	'</label>',
-	'<input ',
-		'type="range" ',
-		'id="{id}" ',
-		'min="{min}" ',
-		'max="{max}" ',
-		'step="{step}" ',
-		'value="{value}" ',
-	'/>'
-].join('');
-
-})(
-	window.Engine,
-	window.Base
-);
+  Engine.Controls.ControlTemplate = [
+    '<label for="{id}">',
+    '{label}: ',
+    '<span id="{id}_value">{value}</span>',
+    '</label>',
+    '<input ',
+    'type="range" ',
+    'id="{id}" ',
+    'min="{min}" ',
+    'max="{max}" ',
+    'step="{step}" ',
+    'value="{value}" ',
+    '/>',
+  ].join('');
+})(window.Engine, window.Base);
