@@ -39,7 +39,7 @@
       case -90:
         return new Vector(vec.y * -1, vec.x);
       case 180:
-        return new Vector(vec.x, vec.y * -1);
+        return vec.clone().mult(-1);
       default:
       case 0:
         return vec.clone();
